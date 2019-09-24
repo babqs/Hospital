@@ -40,6 +40,6 @@ public class NovoAdm implements Serializable{
     
     public void salvar(){
         dao.inserir(adm);
-    }
+    }  
     
 }

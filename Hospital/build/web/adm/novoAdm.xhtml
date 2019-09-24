@@ -19,7 +19,7 @@ and open the template in the editor.
             <p:inputText value="#{novoAdm.adm.nome}"/>
             <p/>
             <p:outputLabel value="Login: "/>
-            <p:inputText value="#{novoAdm.adm.login}"/>
+            <p:inputText value="#{novoAdm.adm.login}" required = "true" maxlength="10" requiredMessage="Login obrigatório"/>
             <p/>
             <p:outputLabel value="Senha: "/>
             <p:inputText type="password" value="#{novoAdm.adm.senha}"/>
