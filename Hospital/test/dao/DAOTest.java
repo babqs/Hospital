@@ -5,7 +5,7 @@
  */
 package dao;
 
-
+import modelo.Tutor;
 import java.util.List;
 import modelo.Administrador;
 import org.junit.After;
@@ -40,18 +40,32 @@ public class DAOTest {
     public void tearDown() {
     }
 
-    @Test
-    public void testInserir() {
-        Administrador adm = new Administrador();
-        DAO<Administrador> dao = new DAO(Administrador.class);
-        dao.inserir(adm);
-    }
+//    @Test
+//    public void testInserir() {
+//        Administrador adm = new Administrador();
+//        DAO<Administrador> dao = new DAO(Administrador.class);
+//        dao.inserir(adm);
+//    }
     
+//     @Test
+//    public void testInserir() {
+//        Tutor tutor = new Tutor();
+//        DAO<Tutor> dao = new DAO(Tutor.class);
+//        dao.inserir(tutor);
+//    }
+//    
+//    @Test
+//    public void testListar(){
+//        List<Administrador> lista = new DAO(Administrador.class).listarTodos();
+//        for(Administrador adm : lista){
+//            System.out.println(adm);
+//        }
     @Test
     public void testListar(){
-        List<Administrador> lista = new DAO(Administrador.class).listarTodos();
-        for(Administrador adm : lista){
-            System.out.println(adm);
+        List<Tutor> lista = new DAO(Tutor.class).listarTodos();
+        for(Tutor tutor : lista){
+            System.out.println(tutor);
         }
+    
     }
 }
