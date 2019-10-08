@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import modelo.Animal;
 
 /**
  *
@@ -50,6 +51,7 @@ public class DAOTest {
 //     @Test
 //    public void testInserir() {
 //        Tutor tutor = new Tutor();
+//        tutor.setNome("Ana");
 //        DAO<Tutor> dao = new DAO(Tutor.class);
 //        dao.inserir(tutor);
 //    }
@@ -60,12 +62,18 @@ public class DAOTest {
 //        for(Administrador adm : lista){
 //            System.out.println(adm);
 //        }
+//    @Test
+//    public void testListar(){
+//        List<Tutor> lista = new DAO(Tutor.class).listarTodos();
+//        for(Tutor tutor : lista){
+//            System.out.println(tutor);
+//        }
+    
     @Test
     public void testListar(){
-        List<Tutor> lista = new DAO(Tutor.class).listarTodos();
-        for(Tutor tutor : lista){
-            System.out.println(tutor);
+        List<Animal> lista = new DAO(Animal.class).listarTodos();
+        for(Animal animal : lista){
+            System.out.println(animal);
         }
-    
     }
 }

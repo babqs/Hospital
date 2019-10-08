@@ -15,12 +15,10 @@ public class Tutor implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    @Column(length = 10)
-    private String nome;
-    
-    @Column(length = 10)
     private Integer id;
+   
+    @Column(length = 30)
+    private String nome;
     
     
     public Tutor(){
@@ -46,9 +44,9 @@ public class Tutor implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.nome);
-        hash = 79 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.nome);
         return hash;
     }
 
