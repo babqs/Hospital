@@ -66,14 +66,29 @@ public class DAOTest {
 //    public void testListar(){
 //        List<Tutor> lista = new DAO(Tutor.class).listarTodos();
 //        for(Tutor tutor : lista){
-//            System.out.println(tutor);
+//            System.out.println(tutor.getNome());
+//            for (Animal a:tutor.getListaAnimal())
+//            {
+//                System.out.println(a.getNome());
+//            }
 //        }
-    
-    @Test
-    public void testListar(){
-        List<Animal> lista = new DAO(Animal.class).listarTodos();
-        for(Animal animal : lista){
-            System.out.println(animal);
-        }
-    }
+//    }
+//    
+//    @Test
+//    public void testListar(){
+//        List<Animal> lista = new DAO(Animal.class).listarTodos();
+//        for(Animal animal : lista){
+//            System.out.println(animal);
+//        }
+//    }
+//    
+//         @Test
+//    public void testInserir() {
+//        Tutor t = (Tutor)new DAO(Tutor.class).buscarPorCodigo(1);
+//        Animal animal = new Animal();
+//        animal.setTutor(t);
+//        animal.setNome("cARLOS");
+//        DAO<Animal> dao = new DAO(Animal.class);
+//        dao.inserir(animal);
+//    }
 }

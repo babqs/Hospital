@@ -18,31 +18,34 @@ import modelo.Tutor;
 
 public class NovoAnimal implements Serializable {
     
-    private Animal animalSelecionado;
+    private Animal animal;
     private DAO<Animal> dao;
-    private List<Animal> animal;
-    private List<Tutor> tutor;
-
-    public List<Tutor> getTutor() {
-        return tutor;
-    }
-
-    public void setTutor(List<Tutor> tutor) {
-        this.tutor = tutor;
-    }
+    private List<Animal> listaAnimal;
+    private Tutor tutor;
+    
+//    private List<Tutor> tutor;
+//
+//    public List<Tutor> getTutor() {
+//        return tutor;
+//    }
+//
+//    public void setTutor(List<Tutor> tutor) {
+//        this.tutor = tutor;
+//    }
     
     public NovoAnimal(){
-        animalSelecionado = new Animal();
+        animal = new Animal();
         dao = new DAO(Animal.class);
-        animal = dao.listarTodos();
+        listaAnimal = dao.listarTodos();
+        
     }
 
-    public Animal getAnimalSelecionado() {
-        return animalSelecionado;
+    public Animal getAnimal() {
+        return animal;
     }
 
-    public void setAnimalSelecionado(Animal animalSelecionado) {
-        this.animalSelecionado = animalSelecionado;
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 
     public DAO<Animal> getDao() {
@@ -53,14 +56,25 @@ public class NovoAnimal implements Serializable {
         this.dao = dao;
     }
 
-    public List<Animal> getAnimal() {
-        return animal;
+    public List<Animal> getListaAnimal() {
+        return listaAnimal;
     }
 
-    public void setAnimal(List<Animal> animal) {
-        this.animal = animal;
+    public void setListaAnimal(List<Animal> listaAnimal) {
+        this.listaAnimal = listaAnimal;
+    }
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
     }
     
     
+    public void salvar(){
+        dao.inserir(animal);
+    }
 }
 

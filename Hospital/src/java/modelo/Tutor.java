@@ -1,13 +1,19 @@
 
 package modelo;
 
+import dao.DAO;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 
@@ -20,10 +26,18 @@ public class Tutor implements Serializable{
     @Column(length = 30)
     private String nome;
     
+    @OneToMany (mappedBy = "tutor", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+   
+    private List<Animal> listaAnimal;
     
+
+    
+  
     public Tutor(){
         id = 0;
         nome = "";
+     
+        
     }
 
     public String getNome() {
@@ -42,11 +56,20 @@ public class Tutor implements Serializable{
         this.id = id;
     }
 
+    public List<Animal> getListaAnimal() {
+        return listaAnimal;
+    }
+
+    public void setListaAnimal(List<Animal> listaAnimal) {
+        this.listaAnimal = listaAnimal;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.nome);
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.nome);
+        hash = 37 * hash + Objects.hashCode(this.listaAnimal);
         return hash;
     }
 
@@ -68,12 +91,15 @@ public class Tutor implements Serializable{
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
+        if (!Objects.equals(this.listaAnimal, other.listaAnimal)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Tutor{" + "nome=" + nome + ", id=" + id + '}';
+        return "Tutor{" + "id=" + id + ", nome=" + nome + ", listaAnimal=" + listaAnimal + '}';
     }
     
 }

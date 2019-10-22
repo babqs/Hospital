@@ -7,10 +7,12 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Hospital Veterinário</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
     </h:head>
     <h:body>
         <h:form id="formPrincipal">
@@ -21,6 +23,54 @@ and open the template in the editor.
                              action="#{novoTutor.salvar()}" 
                              update="@form"/>
             <p/>
+            <p:dataTable var="tutor" value="#{novoTutor.listaTutor}"
+                         tableStyle="width:auto;  min-width: 100%">
+                <p:column headerText="Id">
+                    <h:outputText value="#{tutor.id}" />
+                </p:column>
+                <p:column headerText="Nome:">
+                    <h:outputText value="#{tutor.nome}" />
+                </p:column>                     
+                <p:column headerText="Animais" style="text-align: center">
+                    <!--<h:outputText value="#{tutor.listaAnimal}"/>-->
+                    <p:dataTable var="animalTutor" value="#{tutor.listaAnimal}"
+                                 
+                                 tableStyle="width:auto;  min-width: 100%">
+                        <p:column>
+                            <h:outputText value="#{animalTutor.nome}"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                </p:column>
+
+                <p:column headerText="Ajuste" style="text-align: center">
+                    <p:dataTable tableStyle="width:auto;  min-width: 100%"></p:dataTable>
+                    
+<!--                    <p:commandLink action="#{novoAnimal.salvar()}" 
+                                   styleClass="link"
+                                   update="@formPrincipal" type="button" value="adicionar" >-->
+                        <p:outputLabel value="Nome: "/>
+                        <p:inputText value="#{novoTutor.animal.nome}"/>
+            <p/>
+            <p:commandButton value="Salvar" 
+                             action="#{novoTutor.salvarAnimal()}" 
+                             update="@form"/>
+            <p/>
+                 
+<!--                            <f:setPropertyActionListener value="#{adm}" target="#{adm.adm}" />-->
+<!--                    </p:commandLink>-->
+                </p:column>
+                <!--                    <p:column headerText="" style="text-align: center">
+                                        <p:commandLink styleClass="link" value="excluir"
+                                                       action="#{admControle.excluir(adm)}"                                             
+                                                       update=":formPrincipal" >
+                                            <p:confirm header="Excluir administrador" 
+                                                       message="Você tem certeza que deseja excluir este administrador?"
+                                                       icon="ui-icon-alert"/>
+                                        </p:commandLink>
+                                    </p:column>-->
+
+            </p:dataTable>
         </h:form>
     </h:body>
 </html>

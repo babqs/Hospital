@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
+import modelo.Animal;
 import util.JPAUtil;
 
 public class DAO <T> implements Serializable {
@@ -37,4 +38,13 @@ public List<T> listarTodos(){
     manager.close();
     return lista;
 }
+  public T buscarPorCodigo(Object id) {
+        T objeto;
+        manager = JPAUtil.getEntityManager();
+        objeto = manager.find(classe, id);
+        manager.close();
+        return objeto;
+    }
+
+
 }

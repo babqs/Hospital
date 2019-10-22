@@ -2,17 +2,14 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.criteria.Fetch;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 
@@ -28,15 +25,15 @@ public class Animal implements Serializable{
     @Column (length=30)
     private String especie;
     
-    @OneToMany
-    //falta
+    @ManyToOne
+    @JoinColumn(name= "tutor")
     private Tutor tutor;
 
-    public List<Tutor> getTutor() {
+    public Tutor getTutor() {
         return tutor;
     }
 
-    public void setTutor(List<Tutor> tutor) {
+    public void setTutor(Tutor tutor) {
         this.tutor = tutor;
     }
 
@@ -70,7 +67,7 @@ public class Animal implements Serializable{
         hash = 41 * hash + Objects.hashCode(this.id);
         hash = 41 * hash + Objects.hashCode(this.nome);
         hash = 41 * hash + Objects.hashCode(this.especie);
-        hash = 41 * hash + Objects.hashCode(this.tutor);
+//        hash = 41 * hash + Objects.hashCode(this.tutor);
         return hash;
     }
 
@@ -95,15 +92,15 @@ public class Animal implements Serializable{
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.tutor, other.tutor)) {
-            return false;
-        }
+//        if (!Objects.equals(this.tutor, other.tutor)) {
+//            return false;
+//        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Animal{" + "id=" + id + ", nome=" + nome + ", especie=" + especie + ", tutor=" + tutor + '}';
+        return "Animal{" + "id=" + id + ", nome=" + nome + ", especie=" + especie + /* "Tutor :"+tutor+*/'}';
     }
 
    

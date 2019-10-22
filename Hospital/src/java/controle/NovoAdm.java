@@ -20,6 +20,7 @@ public class NovoAdm implements Serializable{
     public NovoAdm(){
         adm = new Administrador();
         dao = new DAO(Administrador.class);
+        
     }
 
     public Administrador getAdm() {
