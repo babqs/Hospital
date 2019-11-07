@@ -8,69 +8,130 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <h:head>
-        <title>Hospital Veterinário</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        
-    </h:head>
-    <h:body>
-        <h:form id="formPrincipal">
-            <p:outputLabel value="Nome: "/>
-            <p:inputText value="#{novoTutor.tutor.nome}"/>
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:composition template="/template.xhtml">
+       <ui:define name="body">
+            <h:form >
+                <h:panelGrid style=" width:100%; text-align: right"  >                 
+                    <p:commandLink styleClass="link" value="menu" action="/menu"  />                                  
+                </h:panelGrid>
+            </h:form>
             <p/>
-            <p:commandButton value="Salvar" 
-                             action="#{novoTutor.salvar()}" 
-                             update="@form"/>
+            <h:form>
+                <p:commandLink styleClass="link" value="Novo Tutor" 
+                               action="#{tutorControle.abrePopupNovo()}" 
+                               update=":popupNovo" />
+            </h:form> 
             <p/>
-            <p:dataTable var="tutor" value="#{novoTutor.listaTutor}"
-                         tableStyle="width:auto;  min-width: 100%">
-                <p:column headerText="Id">
-                    <h:outputText value="#{tutor.id}" />
-                </p:column>
-                <p:column headerText="Nome:">
-                    <h:outputText value="#{tutor.nome}" />
-                </p:column>                     
-                <p:column headerText="Animais" style="text-align: center">
-                    <!--<h:outputText value="#{tutor.listaAnimal}"/>-->
-                    <p:dataTable var="animalTutor" value="#{tutor.listaAnimal}"
-                                 
-                                 tableStyle="width:auto;  min-width: 100%">
-                        <p:column>
-                            <h:outputText value="#{animalTutor.nome}"/>
-                        </p:column>
-                    </p:dataTable>
-                    
-                </p:column>
+            <h:form id="formPrincipal" >
+                <p:dataTable var="tutor" value="#{tutorControle.listaTutor}"
+                             tableStyle="width:auto;  min-width: 100%" > 
+                    <p:column headerText="Id:">
+                        <h:outputText value="#{tutor.id}" />
+                    </p:column>
+                    <p:column headerText="Nome:">
+                        <h:outputText value="#{tutor.nome}" />
+                    </p:column>
+                    <p:column headerText="CPF:">
+                        <h:outputText value="#{tutor.cpf}" />
+                    </p:column>
+                    <p:column headerText="Telefone:">
+                        <h:outputText value="#{tutor.telefone}" />
+                    </p:column>
+                
+                    <p:column headerText="" style="text-align: center">
+                        <p:commandLink action="#{tutorControle.alterar()}" 
+                                       styleClass="link"
+                                       update=":popupAltera" type="button" value="Alterar" >
+                            <f:setPropertyActionListener value="#{tutor}" target="#{tutorControle.tutor}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="" style="text-align: center">
+                        <p:commandLink styleClass="link" value="Excluir"
+                                       action="#{tutorControle.excluir(tutor)}"                                             
+                                       update=":formPrincipal" >
+                            <p:confirm header="Excluir Tutor" 
+                                       message=" Deseja excluir este tutor?"
+                                       icon="ui-icon-alert"/>
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>   
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:outputPanel style="width: 100%; text-align:center" layout="block"> 
+                        <p:commandButton value="sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:outputPanel>
+                </p:confirmDialog> 
+            </h:form>
 
-                <p:column headerText="Ajuste" style="text-align: center">
-                    <p:dataTable tableStyle="width:auto;  min-width: 100%"></p:dataTable>
-                    
-<!--                    <p:commandLink action="#{novoAnimal.salvar()}" 
-                                   styleClass="link"
-                                   update="@formPrincipal" type="button" value="adicionar" >-->
-                        <p:outputLabel value="Nome: "/>
-                        <p:inputText value="#{novoTutor.animal.nome}"/>
-            <p/>
-            <p:commandButton value="Salvar" 
-                             action="#{novoTutor.salvarAnimal()}" 
-                             update="@form"/>
-            <p/>
-                 
-<!--                            <f:setPropertyActionListener value="#{adm}" target="#{adm.adm}" />-->
-<!--                    </p:commandLink>-->
-                </p:column>
-                <!--                    <p:column headerText="" style="text-align: center">
-                                        <p:commandLink styleClass="link" value="excluir"
-                                                       action="#{admControle.excluir(adm)}"                                             
-                                                       update=":formPrincipal" >
-                                            <p:confirm header="Excluir administrador" 
-                                                       message="Você tem certeza que deseja excluir este administrador?"
-                                                       icon="ui-icon-alert"/>
-                                        </p:commandLink>
-                                    </p:column>-->
+            <p:dialog closable="false" modal="true" header="Novo Tutor" 
+                      id="popupNovo"  visible="#{tutorControle.popupNovo}" >
+                <h:form id="formPopupNovo" >
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Nome "/>
+                        <p:inputText value="#{tutorControle.tutor.nome}" maxlength="100"
+                                     required="true" requiredMessage="Nome obrigatório"/>
+                        <p:outputLabel value="CPF"/>
+                        <p:inputText id="campoCPF" value="#{tutorControle.tutor.cpf}" 
+                                     maxlength="11" 
+                                     required="true" requiredMessage="CPF obrigatório"/>
+                        <p:outputLabel value="Endereço" />
+                        <p:inputText value="#{tutorControle.tutor.endereco}"
+                                    maxlength="100" 
+                                    required="true" requiredMessage="Endereço obrigatório"/>
+                        <p:outputLabel value="Telefone "/>
+                        <p:inputText value="#{tutorControle.tutor.telefone}" maxlength="20"
+                                    required="true" requiredMessage="Telefone obrigatório"/>
+                    </h:panelGrid>
+                    <p/>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:commandButton value="Cancelar" action="#{tutorControle.fecharPopupNovo}" 
+                                         update=":formPrincipal, :popupNovo" immediate="true" />
+                        <p:commandButton value="Confirmar" action="#{tutorControle.salvar()}" 
+                                         update=":popupNovo, :formPrincipal"/>                           
+                    </p:outputPanel>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:messages showIcon="false" />
+                    </p:outputPanel>  
+                </h:form>
+            </p:dialog>
 
-            </p:dataTable>
-        </h:form>
-    </h:body>
-</html>
+
+            <p:dialog closable="false" modal="true" header="Alteração"
+                      id="popupAltera"
+                      visible="#{tutorControle.popupAltera}" >
+                <h:form id="formPopupAltera">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Nome"/>
+                        <p:inputText id="campoNome" value="#{tutorControle.tutor.nome}" 
+                                     maxlength="10" >
+                        </p:inputText>
+                        <p:outputLabel value="CPF"/>
+                        <p:inputText value="#{tutorControle.tutor.cpf}" maxlength="11"
+                                     required="true" requiredMessage="CPF obrigatório"/>
+                        <p:outputLabel value="Endereço" />
+                        <p:inputText value="#{tutorControle.tutor.endereco}"
+                                    maxlength="100" 
+                                    required="true" requiredMessage="Enedereço obrigatório"/>        
+                        <p:outputLabel value="Telefone"/>
+                        <p:inputText value="#{tutorControle.tutor.telefone}" maxlength="20"
+                                     required="true" requiredMessage="Telefone obrigatório"/>
+                    </h:panelGrid>
+                    <p/>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:commandButton value="Cancelar" action="#{tutorControle.fecharPopupAltera()}" 
+                                         update=":popupAltera" immediate="true" />
+                        <p:commandButton value="Confirmar" action="#{tutorControle.alterarTutor()}" 
+                                         update=":formPrincipal :popupAltera"/>                           
+                    </p:outputPanel>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:messages />
+                    </p:outputPanel>
+                </h:form>
+            </p:dialog>
+        </ui:define> 
+    </ui:composition>
+    </html>

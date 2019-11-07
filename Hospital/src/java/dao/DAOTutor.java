@@ -5,10 +5,13 @@
  */
 package dao;
 
-/**
- *
- * @author CC11619405962
- */
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import modelo.Administrador;
+import util.JPAUtil;
+
 public class DAOTutor {
+    
+    
     
 }

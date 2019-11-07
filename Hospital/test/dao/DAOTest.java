@@ -45,6 +45,10 @@ public class DAOTest {
 //    public void testInserir() {
 //        Administrador adm = new Administrador();
 //        DAO<Administrador> dao = new DAO(Administrador.class);
+//        adm.setNome("baq");
+//        adm.setLogin("baq");
+//        adm.setSenha("1234");
+//        adm.setId(1);
 //        dao.inserir(adm);
 //    }
     
@@ -57,23 +61,24 @@ public class DAOTest {
 //    }
 //    
 //    @Test
-//    public void testListar(){
+//    public void testListar(){ 
 //        List<Administrador> lista = new DAO(Administrador.class).listarTodos();
 //        for(Administrador adm : lista){
 //            System.out.println(adm);
 //        }
-//    @Test
-//    public void testListar(){
-//        List<Tutor> lista = new DAO(Tutor.class).listarTodos();
-//        for(Tutor tutor : lista){
-//            System.out.println(tutor.getNome());
-//            for (Animal a:tutor.getListaAnimal())
-//            {
-//                System.out.println(a.getNome());
-//            }
-//        }
 //    }
-//    
+    @Test
+    public void testListar(){
+        List<Tutor> lista = new DAO(Tutor.class).listarTodos();
+        for(Tutor tutor : lista){
+            System.out.println(""+tutor.getNome()+"|Id = "+tutor.getId());
+            for (Animal a:tutor.getListaAnimal())
+            {
+                System.out.println(a.getNomeAnimal());
+            }
+        }
+    }
+    
 //    @Test
 //    public void testListar(){
 //        List<Animal> lista = new DAO(Animal.class).listarTodos();
@@ -87,7 +92,7 @@ public class DAOTest {
 //        Tutor t = (Tutor)new DAO(Tutor.class).buscarPorCodigo(1);
 //        Animal animal = new Animal();
 //        animal.setTutor(t);
-//        animal.setNome("cARLOS");
+//        animal.setNomeAnimal("Rogério");
 //        DAO<Animal> dao = new DAO(Animal.class);
 //        dao.inserir(animal);
 //    }
