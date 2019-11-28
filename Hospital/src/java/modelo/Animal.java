@@ -1,49 +1,56 @@
-
 package modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 
-public class Animal implements Serializable{
-    
+public class Animal implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column (length=30)
+
+    @Column(length = 30)
     private String nome;
-    
-    @Column (length=30)
+
+    @Column(length = 30)
     private String classe;
-    
-    @Column (length = 30)
+
+    @Column(length = 30)
     private String raca;
-    
+
     @Column
     private Integer idadeAnimal;
-    
+
     @ManyToOne
-    @JoinColumn(name= "tutor")
+    @JoinColumn(name = "tutor")
     private Tutor tutor;
     
-    public Animal(){
+    @OneToMany(mappedBy = "animal", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Consulta> listaConsulta;
+
+    public Animal() {
         this.classe = "";
         this.raca = "";
         this.nome = "";
         this.idadeAnimal = 0;
         this.tutor = new Tutor();
+        this.listaConsulta = new ArrayList();
+        
     }
-    
-
 
     public Integer getId() {
         return id;
@@ -93,17 +100,28 @@ public class Animal implements Serializable{
         this.tutor = tutor;
     }
 
+    public List<Consulta> getListaConsulta() {
+        return listaConsulta;
+    }
+
+    public void setListaConsulta(List<Consulta> listaConsulta) {
+        this.listaConsulta = listaConsulta;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.nome);
-        hash = 67 * hash + Objects.hashCode(this.classe);
-        hash = 67 * hash + Objects.hashCode(this.raca);
-        hash = 67 * hash + Objects.hashCode(this.idadeAnimal);
-        hash = 67 * hash + Objects.hashCode(this.tutor);
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.nome);
+        hash = 47 * hash + Objects.hashCode(this.classe);
+        hash = 47 * hash + Objects.hashCode(this.raca);
+        hash = 47 * hash + Objects.hashCode(this.idadeAnimal);
+        hash = 47 * hash + Objects.hashCode(this.tutor);
+        hash = 47 * hash + Objects.hashCode(this.listaConsulta);
         return hash;
     }
+
+
 
     @Override
     public boolean equals(Object obj) {
@@ -135,13 +153,18 @@ public class Animal implements Serializable{
         if (!Objects.equals(this.tutor, other.tutor)) {
             return false;
         }
+        if (!Objects.equals(this.listaConsulta, other.listaConsulta)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Animal{" + "idAnimal=" + id + ", nomeAnimal=" + nome + ", classe=" + classe + ", raca=" + raca + ", idadeAnimal=" + idadeAnimal + ", tutor=" + tutor + '}';
+        return "Animal{" + "id=" + id + ", nome=" + nome + ", classe=" + classe + ", raca=" + raca + ", idadeAnimal=" + idadeAnimal + ", tutor=" + tutor + ", listaConsulta=" + listaConsulta + '}';
     }
+
     
-    
+ 
+
 }

@@ -28,11 +28,15 @@ public class AnimalControle implements Serializable {
     private boolean popupNovo;
     private boolean popupAltera;
     private boolean popupHistorico;
+    private DAO<Consulta> daoConsulta;
+    private List<Consulta> listaConsulta;
 
     public AnimalControle() {
         animal = new Animal();
         daoAnimal = new DAO(Animal.class);
         listaAnimal = daoAnimal.listarTodos();
+        daoConsulta = new DAO(Consulta.class);
+        listaConsulta = daoConsulta.listarTodos();
         tutor = new Tutor();
         daoTutor = new DAO(Tutor.class);
         listaTutor = daoTutor.listarTodos();
@@ -47,6 +51,22 @@ public class AnimalControle implements Serializable {
 
     public void setDaoAnimal(DAO<Animal> daoAnimal) {
         this.daoAnimal = daoAnimal;
+    }
+
+    public DAO<Consulta> getDaoConsulta() {
+        return daoConsulta;
+    }
+
+    public void setDaoConsulta(DAO<Consulta> daoConsulta) {
+        this.daoConsulta = daoConsulta;
+    }
+
+    public List<Consulta> getListaConsulta() {
+        return listaConsulta;
+    }
+
+    public void setListaConsulta(List<Consulta> listaConsulta) {
+        this.listaConsulta = listaConsulta;
     }
 
     public void salvar() throws ExcecaoObjetoNaoEncontrado {
@@ -76,22 +96,6 @@ public class AnimalControle implements Serializable {
         daoAnimal.excluir(animal.getId());
         listaAnimal.remove(animal);
     }
-    
-    public void mostraHistorico(Animal animal){
-//        abrePopupHistorico();
-//        DAO<Consulta> daoConsulta = new DAO(Consulta.class);
-//        List<Consulta> listaConsulta = daoConsulta.listarTodos();
-//        List<Consulta> listaConsultaAux = daoConsulta.listarTodos();
-//        for (Consulta c : listaConsulta){
-//            if(c.getAnimalConsultado().getId()==animal.getId())
-//            {
-//                System.out.println(c.getData());
-//            }
-//        }
-        
-
-        
-    }
 
     public void abrePopupNovo() {
         this.popupNovo = true;
@@ -110,7 +114,7 @@ public class AnimalControle implements Serializable {
     public void fecharPopupAltera() {
         this.popupAltera = false;
     }
-        public void fecharPopupConsulta() {
+        public void fecharPopupHistorico() {
         this.popupHistorico = false;
     }
 
@@ -146,7 +150,7 @@ public class AnimalControle implements Serializable {
     public DAO<Animal> getDao() {
         return daoAnimal;
     }
-
+    
     public void setDao(DAO<Animal> dao) {
         this.daoAnimal = daoAnimal;
     }

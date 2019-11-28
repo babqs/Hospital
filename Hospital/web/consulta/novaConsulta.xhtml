@@ -13,7 +13,7 @@
                 </h:panelGrid>
             </h:form>
             <p/>
-              <h:form>
+            <h:form>
                 <p:commandLink styleClass="link" value="Nova Consulta" 
                                action="#{consultaControle.abrePopupNovo()}" 
                                update=":popupNovo" />
@@ -26,13 +26,15 @@
                         <h:outputText value="#{consulta.id}" />
                     </p:column>
                     <p:column headerText="Data">
-                        <h:outputText value="#{consulta.data}" />
+                        <h:outputText value="#{consulta.data.time}" >
+                            <f:convertDateTime  pattern="dd/MM/yy HH:mm"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Veterinário">
                         <h:outputText value="#{consulta.veterinario.nome}"/>
                     </p:column>
                     <p:column headerText="Animal">
-                        <h:outputText value="#{consulta.animalConsultado.nome}" />
+                        <h:outputText value="#{consulta.animal.nome}" />
                     </p:column>
                     <p:column headerText="Observações">
                         <h:outputText value="#{consulta.observacoes}" />
@@ -60,12 +62,12 @@
                 <h:form id="formPopupNovo" >
                     <h:panelGrid columns="2">
                         <p:outputLabel value="Animal"/>
-                        <p:inputText value="#{consultaControle.consulta.animalConsultado.nome}" maxlength="100"
+                        <p:inputText value="#{consultaControle.consulta.animal.nome}" maxlength="100"
                                      required="true" requiredMessage="Nome do animal é obrigatório"/>
                         <p:outputLabel value="Data"/>
                         <p:calendar id="campoClasse" value="#{consultaControle.consulta.data}" 
-                                     maxlength="11" 
-                                     required="true" requiredMessage="Data Obrigatória"/>
+                                    maxlength="11" 
+                                    required="true" requiredMessage="Data Obrigatória"/>
                         <p:outputLabel value="Veterinario" />
                         <p:inputText value="#{consultaControle.consulta.veterinario.nome}"
                                      maxlength="100" 

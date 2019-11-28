@@ -17,7 +17,7 @@ import modelo.Veterinario;
 public class ConsultaControle implements Serializable {
 
     private Veterinario veterinario;
-    private Animal animalConsulta;
+    private Animal animal;
     private DAO<Consulta> daoConsultas;
     private DAO<Animal> daoanimalConsulta;
     private DAO<Veterinario> daoveterinarioConsulta;
@@ -30,7 +30,7 @@ public class ConsultaControle implements Serializable {
 
     public ConsultaControle() {
         veterinario = new Veterinario();
-        animalConsulta = new Animal();
+        animal = new Animal();
         daoanimalConsulta = new DAO(Animal.class);
         daoveterinarioConsulta = new DAO(Veterinario.class);
         daoConsultas = new DAO(Consulta.class);
@@ -49,12 +49,12 @@ public class ConsultaControle implements Serializable {
         this.veterinario = veterinario;
     }
 
-    public Animal getAnimalConsulta() {
-        return animalConsulta;
+    public Animal getAnimal() {
+        return animal;
     }
 
-    public void setAnimalConsulta(Animal animalConsulta) {
-        this.animalConsulta = animalConsulta;
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 
     public DAO<Consulta> getDaoConsultas() {
@@ -167,13 +167,11 @@ public class ConsultaControle implements Serializable {
     public void salvar() throws ExcecaoObjetoNaoEncontrado {
         Veterinario veterinarioEscolhido = daoveterinarioConsulta.buscarPorNome(consulta.getVeterinario().getNome());
         consulta.setVeterinario(veterinarioEscolhido);
-        Animal animalConsultado = daoanimalConsulta.buscarPorNome(consulta.getAnimalConsultado().getNome());
-        consulta.setAnimalConsultado(animalConsultado);
+        Animal animal = daoanimalConsulta.buscarPorNome(consulta.getAnimal().getNome());
+        consulta.setAnimal(animal);
         daoConsultas.inserir(consulta);
-//        List<Consulta> listaNova = veterinario.getListaConsulta();
-//        listaNova.add(consulta);
-//        veterinarioEscolhido.setListaConsulta(listaNova);
         listaConsulta = daoConsultas.listarTodos();
+        
         fecharPopupNovo();
     }
     

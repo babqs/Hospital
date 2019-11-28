@@ -48,9 +48,9 @@
                         </p:commandLink>
                     </p:column>
                     <p:column headerText="" style="text-align: center">
-                        <p:commandLink action="#{animalControle.mostraHistorico(animal)}" 
+                        <p:commandLink action="#{animalControle.abrePopupHistorico()}" 
                                        styleClass="link"
-                                       update=":popupConsulta" type="button" value="Histórico" >
+                                       update=":popupHistorico" type="button" value="Histórico" >
                             <f:setPropertyActionListener value="#{animal}" target="#{animalControle.animal}" />
                         </p:commandLink>
                     </p:column>
@@ -72,57 +72,63 @@
                     </p:outputPanel>
                 </p:confirmDialog> 
             </h:form>
-            
-            
+
+
             <!--Historico-->
-                   <p:dialog closable="false" modal="true" header="Histórico de Consultas" 
-                      id="popupConsulta"  visible="#{animalControle.popupHistorico}" >
-                <h:form id="formPopupConsulta" >
-                    <h:panelGrid columns="2">
-                        <p:column>
-                        <h:outputText value="#{animal.nome}"/>
-                       </p:column>
-                        <p:column>
-                            <h:outputText value="#{animalControle.mostraHistorico(animal)}"/>
-                       </p:column>
-                        
-                    </h:panelGrid>
+            <p:dialog closable="false" modal="true" header="Histórico de Consultas" 
+                      id="popupHistorico"  visible="#{animalControle.popupHistorico}" >
+                <h:form id="formPopupHistorico" >
+                    <p:dataTable var ="aniCon" value="#{animalControle.animal.listaConsulta}"
+                                 tableStyle="width:auto;  min-width: 100%" >
+                        <p:column headerText="Id">
+                            <h:outputLabel value="#{aniCon.animal.id}" />
+                        </p:column>        
+                        <p:column headerText="Data">
+                            <h:outputLabel value="#{aniCon.data}">
+                                <f:convertDateTime  pattern="dd/MM/yy HH:mm"/>
+                            </h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Animal">
+                            <h:outputLabel value="#{aniCon.animal.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Veterinario">
+                            <h:outputLabel value="#{aniCon.veterinario.nome}"/> 
+                        </p:column>
+
+                        <p:column headerText="Observações">
+                            <h:outputLabel value="#{aniCon.observacoes}"/> 
+                        </p:column>
+                    </p:dataTable>
                     <p/>
-                    <p:outputPanel style="width: 100%; text-align:center" >
-                        <p:commandButton value="Fechar" action="#{animalControle.fecharPopupNovo}" 
-                                         update=":formPrincipal, :popupNovo" immediate="true" />
-                    
+                    <p:outputPanel style="width: 100%; text-align:right" >
+                        <p:commandButton value="Fechar" action="#{animalControle.fecharPopupHistorico()}" 
+                                         update=":popupHistorico" immediate="true" />                      
                     </p:outputPanel>
                     <p:outputPanel style="width: 100%; text-align:center" >
-                        <p:messages showIcon="false" />
-                    </p:outputPanel>  
+                        <p:messages />
+                    </p:outputPanel>
+
                 </h:form>
-            </p:dialog>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            </p:dialog> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <p:dialog closable="false" modal="true" header="Novo Animal" 
                       id="popupNovo"  visible="#{animalControle.popupNovo}" >
                 <h:form id="formPopupNovo" >

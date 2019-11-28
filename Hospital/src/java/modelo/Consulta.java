@@ -37,13 +37,13 @@ public class Consulta implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "animal")
-    private Animal animalConsultado;
+    private Animal animal;
 
     public Consulta() {
         this.data = new Date();
         this.veterinario = new Veterinario();
         this.observacoes = "";
-        this.animalConsultado = new Animal();
+        this.animal = new Animal();
         this.id = 0;
     }
 
@@ -63,8 +63,8 @@ public class Consulta implements Serializable {
         return id;
     }
 
-    public Animal getAnimalConsultado() {
-        return animalConsultado;
+    public Animal getAnimal() {
+        return animal;
     }
 
     public void setData(Date data) {
@@ -83,8 +83,8 @@ public class Consulta implements Serializable {
         this.id = id;
     }
 
-    public void setAnimalConsultado(Animal animalConsultado) {
-        this.animalConsultado = animalConsultado;
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class Consulta implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.data);
         hash = 59 * hash + Objects.hashCode(this.veterinario);
         hash = 59 * hash + Objects.hashCode(this.observacoes);
-        hash = 59 * hash + Objects.hashCode(this.animalConsultado);
+        hash = 59 * hash + Objects.hashCode(this.animal);
         return hash;
     }
 
@@ -123,7 +123,7 @@ public class Consulta implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.animalConsultado, other.animalConsultado)) {
+        if (!Objects.equals(this.animal, other.animal)) {
             return false;
         }
         return true;
@@ -131,7 +131,7 @@ public class Consulta implements Serializable {
 
     @Override
     public String toString() {
-        return "Consulta{" + "data=" + data + ", veterinario=" + veterinario + ", observacoes=" + observacoes + ", id=" + id + ", animalConsultado=" + animalConsultado + '}';
+        return "Consulta{" + "data=" + data + ", veterinario=" + veterinario + ", observacoes=" + observacoes + ", id=" + id + ", animalConsultado=" + animal + '}';
     }
 
 }
