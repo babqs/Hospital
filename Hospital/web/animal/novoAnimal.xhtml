@@ -1,9 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -19,17 +13,23 @@ and open the template in the editor.
                 </h:panelGrid>
             </h:form>
             <p/>
+            <h:form>
+                <p:commandLink styleClass="link" value="Novo Animal" 
+                               action="#{animalControle.abrePopupNovo()}" 
+                               update=":popupNovo" />
+            </h:form> 
+            <p/>
             <h:form id="formPrincipal" >
                 <p:dataTable var="animal" value="#{animalControle.listaAnimal}"
                              tableStyle="width:auto;  min-width: 100%" > 
                     <p:column headerText="Id">
-                        <h:outputText value="#{animal.idAnimal}" />
+                        <h:outputText value="#{animal.id}" />
                     </p:column>
                     <p:column headerText="Tutor ">
                         <h:outputText value="#{animal.tutor.nome}" />
                     </p:column>
                     <p:column headerText="Nome (Animal)">
-                        <h:outputText value="#{animal.nomeAnimal}" />
+                        <h:outputText value="#{animal.nome}" />
                     </p:column>
                     <p:column headerText="Classe">
                         <h:outputText value="#{animal.classe}" />
@@ -41,12 +41,27 @@ and open the template in the editor.
                         <h:outputText value="#{animal.idadeAnimal}" />
                     </p:column>
                     <p:column headerText="" style="text-align: center">
+                        <p:commandLink action="#{animalControle.alterar()}" 
+                                       styleClass="link"
+                                       update=":popupAltera" type="button" value="Alterar" >
+                            <f:setPropertyActionListener value="#{animal}" target="#{animalControle.animal}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="" style="text-align: center">
+                        <p:commandLink action="#{animalControle.mostraHistorico(animal)}" 
+                                       styleClass="link"
+                                       update=":popupConsulta" type="button" value="Histórico" >
+                            <f:setPropertyActionListener value="#{animal}" target="#{animalControle.animal}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="" style="text-align: center">
                         <p:commandLink styleClass="link" value="Excluir"
                                        action="#{animalControle.excluir(animal)}"                                             
                                        update=":formPrincipal" >
                             <p:confirm header="Excluir animal" 
                                        message="Você tem certeza que deseja excluir este animal?"
                                        icon="ui-icon-alert"/>
+
                         </p:commandLink>
                     </p:column>
                 </p:dataTable>   
@@ -57,23 +72,63 @@ and open the template in the editor.
                     </p:outputPanel>
                 </p:confirmDialog> 
             </h:form>
-            <h:form >
-                <h:panelGrid style=" width:100%; text-align: right"  >                 
-                    <p:commandLink styleClass="link" value="menu" action="/menu"  />                                  
-                </h:panelGrid>
-            </h:form>
-            <p/>
-            <h:form>
-                <p:commandLink styleClass="link" value="Novo Animal" 
-                               action="#{animalControle.abrePopupNovo()}" 
-                               update=":popupNovo" />
-            </h:form> 
+            
+            
+            <!--Historico-->
+                   <p:dialog closable="false" modal="true" header="Histórico de Consultas" 
+                      id="popupConsulta"  visible="#{animalControle.popupHistorico}" >
+                <h:form id="formPopupConsulta" >
+                    <h:panelGrid columns="2">
+                        <p:column>
+                        <h:outputText value="#{animal.nome}"/>
+                       </p:column>
+                        <p:column>
+                            <h:outputText value="#{animalControle.mostraHistorico(animal)}"/>
+                       </p:column>
+                        
+                    </h:panelGrid>
+                    <p/>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:commandButton value="Fechar" action="#{animalControle.fecharPopupNovo}" 
+                                         update=":formPrincipal, :popupNovo" immediate="true" />
+                    
+                    </p:outputPanel>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:messages showIcon="false" />
+                    </p:outputPanel>  
+                </h:form>
+            </p:dialog>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <p:dialog closable="false" modal="true" header="Novo Animal" 
                       id="popupNovo"  visible="#{animalControle.popupNovo}" >
                 <h:form id="formPopupNovo" >
                     <h:panelGrid columns="2">
                         <p:outputLabel value="Nome "/>
-                        <p:inputText value="#{animalControle.animal.nomeAnimal}" maxlength="100"
+                        <p:inputText value="#{animalControle.animal.nome}" maxlength="100"
                                      required="true" requiredMessage="Nome obrigatório"/>
                         <p:outputLabel value="Classe"/>
                         <p:inputText id="campoClasse" value="#{animalControle.animal.classe}" 
@@ -87,8 +142,11 @@ and open the template in the editor.
                         <p:inputText value="#{animalControle.animal.tutor.nome}"
                                      maxlength="100" 
                                      required="true" requiredMessage="Nome do tutor obrigatório"/>
-
+                        <p:outputLabel value="Idade"/>
+                        <p:inputText value="#{animalControle.animal.idadeAnimal}" maxlength="2"
+                                     required="true" requiredMessage="Idade obrigatório"/>
                     </h:panelGrid>
+                    <p/>
                     <p:outputPanel style="width: 100%; text-align:center" >
                         <p:commandButton value="Cancelar" action="#{animalControle.fecharPopupNovo}" 
                                          update=":formPrincipal, :popupNovo" immediate="true" />
@@ -101,10 +159,45 @@ and open the template in the editor.
                 </h:form>
             </p:dialog>
 
-
-
-
-
+            <p:dialog closable="false" modal="true" header="Alterar"
+                      id="popupAltera"
+                      visible="#{animalControle.popupAltera}" >
+                <h:form id="formPopupAltera">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Nome"/>
+                        <p:inputText id="campoNome" value="#{animalControle.animal.nome}" 
+                                     maxlength="20" >
+                        </p:inputText>
+                        <p:outputLabel value="Nome(Tutor)"/>
+                        <p:inputText value="#{animalControle.tutor.nome}" maxlength="30"
+                                     required="true" requiredMessage="Tutor obrigatório"/>
+                        <p:outputLabel value="Raça" />
+                        <p:inputText value="#{animalControle.animal.raca}"
+                                     maxlength="20" 
+                                     required="true" requiredMessage="Raça obrigatória"/>        
+                        <p:outputLabel value="Classe"/>
+                        <p:inputText value="#{animalControle.animal.classe}" maxlength="20"
+                                     required="true" requiredMessage="Classe obrigatório"/>
+                        <p:outputLabel value="Idade"/>
+                        <p:inputText value="#{animalControle.animal.idadeAnimal}" maxlength="2"
+                                     required="true" requiredMessage="Idade obrigatório"/>
+                    </h:panelGrid>
+                    <p/>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:commandButton value="Cancelar" action="#{animalControle.fecharPopupAltera()}" 
+                                         update=":popupAltera" immediate="true" />
+                        <p:commandButton value="Confirmar" action="#{animalControle.alterarAnimal()}" 
+                                         update=":formPrincipal :popupAltera"/>                           
+                    </p:outputPanel>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:messages />
+                    </p:outputPanel>
+                </h:form>
+            </p:dialog>
         </ui:define> 
     </ui:composition>
 </html>
+
+
+
+

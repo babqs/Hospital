@@ -68,6 +68,7 @@ public class TutorControle implements Serializable {
     public void salvar(){
         if (tutor.getNome()!=""){
         daoTutor.inserir(tutor);
+        listaTutor = daoTutor.listarTodos();
         fecharPopupNovo();
         }
     }

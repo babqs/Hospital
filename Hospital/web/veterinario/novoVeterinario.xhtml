@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+            <h:form >
+                <h:panelGrid style=" width:100%; text-align: right"  >                 
+                    <p:commandLink styleClass="link" value="menu" action="/menu"  />                                  
+                </h:panelGrid>
+            </h:form>
+            <p/>
+            <h:form>
+                <p:commandLink styleClass="link" value="Novo Veterinário" 
+                               action="#{veterinarioControle.abrePopupNovo()}" 
+                               update=":popupNovo" />
+            </h:form> 
+            <p/>
+            <h:form id="formPrincipal" >
+                <p:dataTable var="veterinario" value="#{veterinarioControle.listaVeterinario}"
+                             tableStyle="width:auto;  min-width: 100%" > 
+                    <p:column headerText="Id:">
+                        <h:outputText value="#{veterinario.id}" />
+                    </p:column>
+                    <p:column headerText="Nome:">
+                        <h:outputText value="#{veterinario.nome}" />
+                    </p:column>
+                    <p:column headerText="CRMV:">
+                        <h:outputText value="#{veterinario.numeroCRMV}" />
+                    </p:column>
+                    <p:column headerText="" style="text-align: center">
+                        <p:commandLink action="#{veterinarioControle.abrePopupAltera()}" 
+                                       styleClass="link"
+                                       update=":popupAltera" type="button" value="Alterar" >
+                            <f:setPropertyActionListener value="#{veterinario}" target="#{veterinarioControle.veterinario}" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="" style="text-align: center">
+                        <p:commandLink styleClass="link" value="Excluir"
+                                       action="#{veterinarioControle.excluir(veterinario)}"                                             
+                                       update=":formPrincipal" >
+                            <p:confirm header="Excluir veterinário" 
+                                       message=" Deseja excluir este veterinario?"
+                                       icon="ui-icon-alert"/>
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>   
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:outputPanel style="width: 100%; text-align:center" layout="block"> 
+                        <p:commandButton value="sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:outputPanel>
+                </p:confirmDialog> 
+
+            </h:form>
+            <p:dialog closable="false" modal="true" header="Novo Veterinario" 
+                      id="popupNovo"  visible="#{veterinarioControle.popupNovo}" >
+                <h:form id="formPopupNovo" >
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Nome "/>
+                        <p:inputText value="#{veterinarioControle.veterinario.nome}" maxlength="100"
+                                     required="true" requiredMessage="Nome obrigatório"/>
+                        <p:outputLabel value="CRMV"/>
+                        <p:inputText id="campoCRMV" value="#{veterinarioControle.veterinario.numeroCRMV}" 
+                                     maxlength="11" 
+                                     required="true" requiredMessage="CRMV obrigatório"/>
+                    </h:panelGrid>
+                    <p/>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:commandButton value="Cancelar" action="#{veterinarioControle.fecharPopupNovo}" 
+                                         update=":formPrincipal, :popupNovo" immediate="true" />
+                        <p:commandButton value="Confirmar" action="#{veterinarioControle.salvar()}" 
+                                         update=":popupNovo, :formPrincipal"/>                           
+                    </p:outputPanel>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:messages showIcon="false" />
+                    </p:outputPanel>  
+                </h:form>
+            </p:dialog>
+
+
+            <p:dialog closable="false" modal="true" header="Alteração"
+                      id="popupAltera"
+                      visible="#{veterinarioControle.popupAltera}" >
+                <h:form id="formPopupAltera">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Nome"/>
+                        <p:inputText id="campoNome" value="#{veterinarioControle.veterinario.nome}" 
+                                     maxlength="10" >
+                        </p:inputText>
+                        <p:outputLabel value="CRMV"/>
+                        <p:inputText value="#{veterinarioControle.veterinario.numeroCRMV}" maxlength="11"
+                                     required="true" requiredMessage="CRMV obrigatório"/>
+                        <p:outputLabel value="Endereço" />
+                        <p:inputText value="#{veterinarioControle.veterinario.endereco}"
+                                     maxlength="100" 
+                                     required="true" requiredMessage="Enedereço obrigatório"/>        
+                    </h:panelGrid>
+                    <p/>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:commandButton value="Cancelar" action="#{veterinarioControle.fecharPopupAltera()}" 
+                                         update=":popupAltera" immediate="true" />
+                        <p:commandButton value="Confirmar" action="#{veterinarioControle.alterarVeterinario()}" 
+                                         update=":formPrincipal :popupAltera"/>                           
+                    </p:outputPanel>
+                    <p:outputPanel style="width: 100%; text-align:center" >
+                        <p:messages />
+                    </p:outputPanel>
+                </h:form>
+            </p:dialog>
+        </ui:define> 
+    </ui:composition>
+</html>

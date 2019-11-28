@@ -12,14 +12,13 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import modelo.Animal;
+import modelo.Consulta;
 import modelo.Tutor;
-
-
 
 @ManagedBean
 @ViewScoped
-public class AnimalControle implements Serializable{
-    
+public class AnimalControle implements Serializable {
+
     private List<Animal> listaAnimal;
     private Animal animal;
     private DAO<Animal> daoAnimal;
@@ -28,16 +27,18 @@ public class AnimalControle implements Serializable{
     private DAO<Tutor> daoTutor;
     private boolean popupNovo;
     private boolean popupAltera;
-    
-    public AnimalControle(){
-    animal = new Animal();
-    daoAnimal = new DAO(Animal.class);
-    listaAnimal = daoAnimal.listarTodos();
-    tutor = new Tutor();
-    daoTutor = new DAO(Tutor.class);
-    listaTutor = daoTutor.listarTodos();
-    popupNovo = false;
-    popupAltera = false;
+    private boolean popupHistorico;
+
+    public AnimalControle() {
+        animal = new Animal();
+        daoAnimal = new DAO(Animal.class);
+        listaAnimal = daoAnimal.listarTodos();
+        tutor = new Tutor();
+        daoTutor = new DAO(Tutor.class);
+        listaTutor = daoTutor.listarTodos();
+        popupNovo = false;
+        popupAltera = false;
+        popupHistorico = false;
     }
 
     public DAO<Animal> getDaoAnimal() {
@@ -48,48 +49,83 @@ public class AnimalControle implements Serializable{
         this.daoAnimal = daoAnimal;
     }
 
-    public void salvar() throws ExcecaoObjetoNaoEncontrado{
-        this.animal.getTutor().getNome();
+    public void salvar() throws ExcecaoObjetoNaoEncontrado {
         Tutor tutorEscolhido = daoTutor.buscarPorNome(this.animal.getTutor().getNome());
         animal.setTutor(tutorEscolhido);
         daoAnimal.inserir(animal);
         listaAnimal = daoAnimal.listarTodos();
         fecharPopupNovo();
     }
-    
-    public void alterarAnimal() { 
+
+    public void alterar() {
+//        daoAnimal.alterar(animal);
+//        listaAnimal = daoAnimal.listarTodos(); 
+//        animal = new Animal(); 
+//        fecharPopupAltera();
+        abrePopupAltera();
+    }
+
+    public void alterarAnimal() {
+      
         daoAnimal.alterar(animal);
-        listaAnimal = daoAnimal.listarTodos(); 
-        animal = new Animal(); 
+        listaAnimal = daoAnimal.listarTodos();
         fecharPopupAltera();
     }
-    
-    public void excluir(Animal animal){
-        daoAnimal.excluir(animal.getIdAnimal());
+
+    public void excluir(Animal animal) {
+        daoAnimal.excluir(animal.getId());
         listaAnimal.remove(animal);
     }
     
-    public void abrePopupNovo(){
-        this.popupNovo = true;
-        animal = new Animal();
+    public void mostraHistorico(Animal animal){
+//        abrePopupHistorico();
+//        DAO<Consulta> daoConsulta = new DAO(Consulta.class);
+//        List<Consulta> listaConsulta = daoConsulta.listarTodos();
+//        List<Consulta> listaConsultaAux = daoConsulta.listarTodos();
+//        for (Consulta c : listaConsulta){
+//            if(c.getAnimalConsultado().getId()==animal.getId())
+//            {
+//                System.out.println(c.getData());
+//            }
+//        }
+        
+
         
     }
-    
+
+    public void abrePopupNovo() {
+        this.popupNovo = true;
+        animal = new Animal();
+
+    }
+
     public void fecharPopupNovo() {
         this.popupNovo = false;
     }
-    
-     public void abrePopupAltera(){        
+
+    public void abrePopupAltera() {
         this.popupAltera = true;
     }
-    
-    public void fecharPopupAltera(){
+
+    public void fecharPopupAltera() {
         this.popupAltera = false;
     }
-    
-    public void alterar(){
-        abrePopupAltera();
+        public void fecharPopupConsulta() {
+        this.popupHistorico = false;
     }
+
+    public void abrePopupHistorico() {
+        this.popupHistorico = true;
+    }
+
+    public boolean isPopupHistorico() {
+        return popupHistorico;
+    }
+
+    public void setPopupHistorico(boolean popupHistorico) {
+        this.popupHistorico = popupHistorico;
+    }
+    
 
     public List<Animal> getListaAnimal() {
         return listaAnimal;
@@ -138,7 +174,7 @@ public class AnimalControle implements Serializable{
     public void setDaoTutor(DAO<Tutor> daoTutor) {
         this.daoTutor = daoTutor;
     }
-    
+
     public boolean isPopupNovo() {
         return popupNovo;
     }
@@ -153,7 +189,6 @@ public class AnimalControle implements Serializable{
 
     public void setPopupAltera(boolean popupAltera) {
         this.popupAltera = popupAltera;
-    }  
+    }
 
-    
 }

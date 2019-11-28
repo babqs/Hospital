@@ -17,10 +17,10 @@ public class Animal implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAnimal;
+    private Integer id;
     
     @Column (length=30)
-    private String nomeAnimal;
+    private String nome;
     
     @Column (length=30)
     private String classe;
@@ -38,33 +38,27 @@ public class Animal implements Serializable{
     public Animal(){
         this.classe = "";
         this.raca = "";
-        this.nomeAnimal = "";
+        this.nome = "";
         this.idadeAnimal = 0;
         this.tutor = new Tutor();
     }
     
-    public Animal(String classe, String raca, String nome, Integer idade, Tutor tutor){
-        this.classe = classe;
-        this.raca = raca;
-        this.nomeAnimal = nomeAnimal;
-        this.idadeAnimal = idadeAnimal;
-        this.tutor = tutor;
+
+
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getIdAnimal() {
-        return idAnimal;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setIdAnimal(Integer idAnimal) {
-        this.idAnimal = idAnimal;
+    public String getNome() {
+        return nome;
     }
 
-    public String getNomeAnimal() {
-        return nomeAnimal;
-    }
-
-    public void setNomeAnimal(String nomeAnimal) {
-        this.nomeAnimal = nomeAnimal;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getClasse() {
@@ -102,8 +96,8 @@ public class Animal implements Serializable{
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.idAnimal);
-        hash = 67 * hash + Objects.hashCode(this.nomeAnimal);
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.nome);
         hash = 67 * hash + Objects.hashCode(this.classe);
         hash = 67 * hash + Objects.hashCode(this.raca);
         hash = 67 * hash + Objects.hashCode(this.idadeAnimal);
@@ -123,7 +117,7 @@ public class Animal implements Serializable{
             return false;
         }
         final Animal other = (Animal) obj;
-        if (!Objects.equals(this.nomeAnimal, other.nomeAnimal)) {
+        if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
         if (!Objects.equals(this.classe, other.classe)) {
@@ -132,7 +126,7 @@ public class Animal implements Serializable{
         if (!Objects.equals(this.raca, other.raca)) {
             return false;
         }
-        if (!Objects.equals(this.idAnimal, other.idAnimal)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.idadeAnimal, other.idadeAnimal)) {
@@ -146,7 +140,7 @@ public class Animal implements Serializable{
 
     @Override
     public String toString() {
-        return "Animal{" + "idAnimal=" + idAnimal + ", nomeAnimal=" + nomeAnimal + ", classe=" + classe + ", raca=" + raca + ", idadeAnimal=" + idadeAnimal + ", tutor=" + tutor + '}';
+        return "Animal{" + "idAnimal=" + id + ", nomeAnimal=" + nome + ", classe=" + classe + ", raca=" + raca + ", idadeAnimal=" + idadeAnimal + ", tutor=" + tutor + '}';
     }
     
     

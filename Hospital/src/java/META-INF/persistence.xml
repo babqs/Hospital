@@ -4,7 +4,8 @@
     <class>modelo.Administrador</class>
     <class>modelo.Tutor</class>
     <class>modelo.Animal</class>
-    
+    <class>modelo.Consulta</class>
+    <class>modelo.Veterinario</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <!-- nome do banco aqui -->
@@ -12,7 +13,7 @@
       <!-- nome do usuário aqui -->
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <!-- senha do banco aqui -->
-      <property name="javax.persistence.jdbc.password" value="postgres"/>      
+      <property name="javax.persistence.jdbc.password" value="postgres"/>
       <!-- cria as tabelas automaticamente -->
       <!--property name="eclipselink.ddl-generation" value="create-tables"/-->
       <!-- comente a linha anterior e descomente a próxima quando fizer alterações nas classes entity -->
